@@ -1,0 +1,28 @@
+
+<script type="text/javascript">
+    function displaySchema() {
+        function enumerateKeyspaces(keyspaces) {
+            $("#schema").html("<img src=\"/static/images/ajax-loader.gif\">");
+            var sbuffer = [];
+            sbuffer.push("<ul>");
+            for (keyspace in keyspaces) {
+                sbuffer.push("<li>"+keyspace);
+                sbuffer.push("<ul>")
+                for (cf in keyspaces[keyspace]) {
+                    sbuffer.push("<li>"+cf+"</li>");
+                }
+                sbuffer.push("</ul>");
+                sbuffer.push("</li>");
+            }
+            sbuffer.push("</ul>");
+            $("#schema").html(sbuffer.join(""));
+        }
+        var ret = $.get("describe/keyspaces/", "", enumerateKeyspaces, "json");
+        // error handling
+    }
+    
+    $(document).ready(displaySchema);
+</script>
+
+<h2>Keyspaces / Column families</h2>
+<div id="schema"></div>
