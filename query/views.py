@@ -63,6 +63,7 @@ def query(request):
     
 def describe_keyspaces(request):
     schema = __get_connection().decoder.schema    # you gotta keep 'em violated
+    del schema["system"]
     return HttpResponse(to_json(schema), mimetype="application/json")
 
 
