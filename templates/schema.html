@@ -6,19 +6,44 @@
             var sbuffer = [];
             sbuffer.push("<ul>");
             for (keyspace in keyspaces) {
-                sbuffer.push("<li>"+keyspace);
+                // Keyspace list item w/ link to "USE"
+                sbuffer.push("<li><a href=\"javascript:void(null)\" " + 
+                    "title=\"Use " + keyspace + "\" " + 
+                    "onclick=\"useKeyspace('" + keyspace + "');\">" + 
+                    keyspace + "</a>"
+                );
+                
+                // Column families for this keyspace
                 sbuffer.push("<ul>")
                 for (cf in keyspaces[keyspace]) {
                     sbuffer.push("<li>"+cf+"</li>");
                 }
                 sbuffer.push("</ul>");
+                
                 sbuffer.push("</li>");
             }
             sbuffer.push("</ul>");
             $("#schema").html(sbuffer.join(""));
         }
         var ret = $.get("describe/keyspaces/", "", enumerateKeyspaces, "json");
+        ret.error(function(jqXHR, textStatus, errorThrown) {
+            console.log("Error: " + textStatus + ": " + errorThrown);
+        });
         // error handling
+    }
+    
+    function useKeyspace(keyspace) {
+        var data = {};
+        var csrf_token = $('#csrf_token >div >input').attr("value");
+        data['post_data'] = "USE " + keyspace;
+        data["csrfmiddlewaretoken"] = csrf_token;
+        var ret = $.post("query/", data, displayResults, "json")
+        ret.success(
+            function() {
+                if (data["post_data"].match(/(create|drop)/i)) {
+                    displaySchema();
+            }
+        });
     }
     
     $(document).ready(displaySchema);

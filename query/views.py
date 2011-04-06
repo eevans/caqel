@@ -38,7 +38,7 @@ def __serialize(results):
                     {"name": marshal(col.name), "value": marshal(col.value)})
         return to_json({"rows": rows})
     else:
-        if results is None: return to_json({"void": results})
+        if results is None: return to_json({"void": "Success"})
         else: return to_json({"int": results})
 
 # View methods
@@ -48,7 +48,15 @@ def index(request):
 def query(request):
     query_string = request.POST['post_data']
     try:
-        json = __serialize(__execute(query_string))
+        results = __execute(query_string)
+        
+        # If return was void (None), and the statement is a USE, then
+        # tailor the display message a bit.
+        if results is None and query_string.upper().startswith("USE"):
+            keyspace = query_string.split()[1].strip(";")
+            json = to_json({"void": "Using keyspace %s" % keyspace})
+        else:
+            json = __serialize(results)
     except CQLException, error:
         json = to_json({"exception": str(error)})
     return HttpResponse(json, mimetype="application/json")

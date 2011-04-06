@@ -32,7 +32,7 @@
                     sbuffer.push("<br />");
                 }
             } else if (results.hasOwnProperty("void")) {
-                sbuffer.push(span("void", "Success"));
+                sbuffer.push(span("void", results["void"]));
             } else if (results.hasOwnProperty("int")) {
                 sbuffer.push(results.int);
             } else if (results.hasOwnProperty("exception")) {
@@ -45,24 +45,29 @@
             $("#query_results").fadeIn(1000);
         }
         
+        function postQuery(queryString) {
+            var csrf_token = $('#csrf_token >div >input').attr("value");
+            var data = {}
+            data["post_data"] = queryString;
+            data["csrfmiddlewaretoken"] = csrf_token;
+            
+            var ret = $.post("query/", data, displayResults, "json")
+            ret.success(
+                function() {
+                    if (data["post_data"].match(/(create|drop)/i)) {
+                        displaySchema();
+                    }
+                });
+            ret.error(function(jqXHR, textStatus, errorThrown) {
+                console.log("Query failed: " + textStatus + ": " + errorThrown);
+            });
+        }
+        
         $(document).ready(function() {
             $('#query_form').submit(function(event) {
                 event.preventDefault(); // cancel the default action
                 var form = this;
-                var csrf_token = $('#csrf_token >div >input').attr("value");
-                var data = {}
-                data["post_data"] = $(form).find('textarea[name=query]').val();
-                data["csrfmiddlewaretoken"] = csrf_token;
-                var ret = $.post("query/", data, displayResults, "json")
-                ret.success(
-                    function() {
-                        if (data["post_data"].match(/(create|drop)/i)) {
-                            displaySchema();
-                        }
-                    });
-                ret.error(function(jqXHR, textStatus, errorThrown) {
-                    alert("Query failed! :(\n"+textStatus+": "+errorThrown);
-                });
+                postQuery($(form).find('textarea[name=query]').val());
             });
         });
     </script>
