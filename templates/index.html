@@ -1,5 +1,8 @@
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
+    <link rel="stylesheet" href="/static/css/style.css" />
     <script type="text/javascript" src="/static/js/jquery.js"></script>
 
     <script type="text/javascript">
@@ -64,22 +67,31 @@
         });
     </script>
 </head>
+<body>
 
-<h1>CQL!</h1>
-
-<div>
-    <div id="query_results"><br /></div>
-    
-    <form action="query/" method="post" id="query_form">
-        <div><textarea name="query" rows="4" cols="80"></textarea></div>
-        <div>
-            <input type="submit" value="Submit" />
-            <input type="button" value="Reset"
-                onclick="$('#query_form').find('textarea[name=query]').val('')" />
-        </div>
-    </form>
-    
+<div id="header"></div>
+<div id="container">
     {% include "schema.html" %}
     
+    <div>
+        <h2>Query Results</h2>
+        <div id="query_results">Enter a query below and click Submit.</div>
+        
+        <form action="query/" method="post" id="query_form">
+            <div>
+                <textarea name="query" rows="4" cols="80" tabindex="1"></textarea>
+            </div>
+            <div>
+                <input type="submit" value="Submit" tabindex="2" />
+                <input type="button" value="Reset" tabindex="3"
+                       onclick="$('#query_form').find('textarea[name=query]').val('')" />
+            </div>
+        </form>
+    </div>
+
     <div id="csrf_token">{% csrf_token %}</div>
 </div>
+<div id="footer"></div>
+
+</body>
+</html>
