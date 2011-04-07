@@ -81,7 +81,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/srv/caqel/templates'
+    '/home/eevans/dev/src/git/caqel/templates'
 )
 
 INSTALLED_APPS = (
@@ -98,4 +98,4 @@ INSTALLED_APPS = (
 
 CASSANDRA_HOST="127.0.0.1"
 CASSANDRA_PORT=9170
-STATIC_DOCROOT = "/srv/caqel/static"
+STATIC_DOCROOT = "/home/eevans/dev/src/git/caqel/static"
