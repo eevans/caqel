@@ -2,7 +2,6 @@
 <script type="text/javascript">
     function displaySchema() {
         function enumerateKeyspaces(keyspaces) {
-            $("#schema").html("<img src=\"/static/images/ajax-loader.gif\">");
             var sbuffer = [];
             sbuffer.push("<ul>");
             for (keyspace in keyspaces) {
@@ -25,6 +24,11 @@
             sbuffer.push("</ul>");
             $("#schema").html(sbuffer.join(""));
         }
+        
+        $("#schema").html($("<center/>").append(
+            $("<img/>").attr("src", "/static/images/light-loader.gif")
+                .attr("border", "0")
+        ));
         var ret = $.get("describe/keyspaces/", "", enumerateKeyspaces, "json");
         ret.error(function(jqXHR, textStatus, errorThrown) {
             console.log("Error: " + textStatus + ": " + errorThrown);
@@ -33,17 +37,7 @@
     }
     
     function useKeyspace(keyspace) {
-        var data = {};
-        var csrf_token = $('#csrf_token >div >input').attr("value");
-        data['post_data'] = "USE " + keyspace;
-        data["csrfmiddlewaretoken"] = csrf_token;
-        var ret = $.post("query/", data, displayResults, "json")
-        ret.success(
-            function() {
-                if (data["post_data"].match(/(create|drop)/i)) {
-                    displaySchema();
-            }
-        });
+        postQuery("USE " + keyspace);
     }
     
     $(document).ready(displaySchema);

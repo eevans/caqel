@@ -14,9 +14,6 @@
             function nameSpan(name) { return span("column_name", name); }
             function valueSpan(value) { return span("column_value", value); }
             
-            //$("#query_results").hide("slow").empty().show("slow")
-            $("#query_results").html("<img src=\"/static/images/ajax-loader.gif\">");
-            
             var sbuffer = [];
             if (results.hasOwnProperty("rows")) {
                 var rows = results.rows;
@@ -46,6 +43,11 @@
         }
         
         function postQuery(queryString) {
+            // Set the spinner image to spinning
+            $("#query_results").html($("<center/>").append(
+                $("<img/>").attr("src", "/static/images/dark-loader.gif")
+                    .attr("border", "0")
+            ));
             var csrf_token = $('#csrf_token >div >input').attr("value");
             var data = {}
             data["post_data"] = queryString;
