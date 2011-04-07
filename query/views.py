@@ -17,11 +17,13 @@ __local = threading.local()
 def __get_connection():
     return Connection(settings.CASSANDRA_HOST, settings.CASSANDRA_PORT)
 
-def __execute(query, *args):
+def __execute(query, keyspace=None):
     # Lazily assign a connection instance to a thread-local variable
     if not hasattr(__local, "conn") or not getattr(__local, "conn"):
         __local.conn = __get_connection()
-    return __local.conn.execute(query, *args)
+    if keyspace:
+        __local.conn.execute("USE " + keyspace)
+    return __local.conn.execute(query)
 
 def __serialize(results):
     def marshal(value):
@@ -48,14 +50,14 @@ def index(request):
 def query(request):
     query_string = request.POST['post_data']
     try:
-        results = __execute(query_string)
-        
-        # If return was void (None), and the statement is a USE, then
-        # tailor the display message a bit.
-        if results is None and query_string.upper().startswith("USE"):
+        if query_string.upper().startswith("USE"):
+            __execute(query_string)
             keyspace = query_string.split()[1].strip(";")
+            request.session["current_keyspace"] = keyspace
             json = to_json({"void": "Using keyspace %s" % keyspace})
         else:
+            current_keyspace = request.session.get("current_keyspace", None)
+            results = __execute(query_string, current_keyspace)
             json = __serialize(results)
     except CQLException, error:
         json = to_json({"exception": str(error)})

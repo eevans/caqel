@@ -99,3 +99,4 @@ INSTALLED_APPS = (
 CASSANDRA_HOST="127.0.0.1"
 CASSANDRA_PORT=9170
 STATIC_DOCROOT = "/home/eevans/dev/src/git/caqel/static"
+SESSION_ENGINE = "django.contrib.sessions.backends.file"
