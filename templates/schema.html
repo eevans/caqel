@@ -8,7 +8,7 @@
                 // Keyspace list item w/ link to "USE"
                 sbuffer.push("<li><a href=\"javascript:void(null)\" " + 
                     "title=\"Use " + keyspace + "\" " + 
-                    "onclick=\"useKeyspace('" + keyspace + "');\">" + 
+                    "onclick=\"postQuery('USE " + keyspace + "');\">" + 
                     keyspace + "</a>"
                 );
                 
@@ -34,10 +34,6 @@
             console.log("Error: " + textStatus + ": " + errorThrown);
         });
         // error handling
-    }
-    
-    function useKeyspace(keyspace) {
-        postQuery("USE " + keyspace);
     }
     
     $(document).ready(displaySchema);
