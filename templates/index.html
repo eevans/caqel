@@ -7,39 +7,33 @@
 
     <script type="text/javascript">
         function displayResults(results) {
-            function span(cls, value) {
-                return "<span class=\"" + cls + "\">" + value + "</span>"
-            }
-            function keySpan(key) { return span("key", key); }
-            function nameSpan(name) { return span("column_name", name); }
-            function valueSpan(value) { return span("column_value", value); }
+            var display = $("#query_results");
+            display.empty();
             
-            var sbuffer = [];
             if (results.hasOwnProperty("rows")) {
                 var rows = results.rows;
                 for (row in rows) {
-                    sbuffer.push(keySpan(row) + " ");
+                    display.append($("<span/>").addClass("key").append(row+""));
                     for (col in rows[row]) {
                         var column = rows[row][col]
-                        sbuffer.push(nameSpan(column.name));
-                        sbuffer.push(",");
-                        sbuffer.push(valueSpan(column.value));
-                        sbuffer.push(" ");
+                        display.append($("<span/>").addClass("column_name").append(column.name));
+                        display.append(",");
+                        display.append($("<span/>").addClass("column_value").append(column.value));
+                        display.append(" ");
                     }
-                    sbuffer.push("<br />");
+                    display.append($("<br/>"));
                 }
             } else if (results.hasOwnProperty("void")) {
-                sbuffer.push(span("void", results["void"]));
+                display.append(
+                    $("<span/>").addClass("void").append(results["void"]));
             } else if (results.hasOwnProperty("int")) {
-                sbuffer.push(results.int);
+                display.append($("<span/>").append(results.int));
             } else if (results.hasOwnProperty("exception")) {
-                sbuffer.push(span("exception", results.exception));
+                display.append(
+                    $("<span/>").addClass("exception").append(results.exception));
             } else {
                 // wtf?
             }
-            $("#query_results").hide();
-            $("#query_results").html(sbuffer.join(""));
-            $("#query_results").fadeIn(1000);
         }
         
         function postQuery(queryString) {

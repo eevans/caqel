@@ -2,27 +2,27 @@
 <script type="text/javascript">
     function displaySchema() {
         function enumerateKeyspaces(keyspaces) {
-            var sbuffer = [];
-            sbuffer.push("<ul>");
+            var kspList = $("<ul/>")
             for (keyspace in keyspaces) {
                 // Keyspace list item w/ link to "USE"
-                sbuffer.push("<li><a href=\"javascript:void(null)\" " + 
-                    "title=\"Use " + keyspace + "\" " + 
-                    "onclick=\"postQuery('USE " + keyspace + "');\">" + 
-                    keyspace + "</a>"
-                );
+                var kspItem = $("<li/>");
+                var kspLink = $("<a/>").append(keyspace)
+                    .attr("href", "javascript:void(null)")
+                    .attr("title", "Use "+keyspace)
+                    .attr("onClick", "postQuery('USE "+keyspace+"')");
+                kspItem.append(kspLink);
+                
+                var cfList = $("<ul/>");
                 
                 // Column families for this keyspace
-                sbuffer.push("<ul>")
                 for (cf in keyspaces[keyspace]) {
-                    sbuffer.push("<li>"+cf+"</li>");
+                    cfList.append($("<li/>").append(cf));
                 }
-                sbuffer.push("</ul>");
                 
-                sbuffer.push("</li>");
+                kspItem.append(cfList);
+                kspList.append(kspItem);
             }
-            sbuffer.push("</ul>");
-            $("#schema").html(sbuffer.join(""));
+            $("#schema").html(kspList);
         }
         
         $("#schema").html($("<center/>").append(
@@ -33,7 +33,6 @@
         ret.error(function(jqXHR, textStatus, errorThrown) {
             console.log("Error: " + textStatus + ": " + errorThrown);
         });
-        // error handling
     }
     
     $(document).ready(displaySchema);
