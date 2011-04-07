@@ -13,5 +13,5 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # (r'^admin/', include(admin.site.urls)),
-    (r'', include('wwwcql.query.urls')),
+    (r'', include('caqel.query.urls')),
 )

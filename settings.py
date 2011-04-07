@@ -75,13 +75,13 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'wwwcql.urls'
+ROOT_URLCONF = 'caqel.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/home/eevans/dev/src/git/wwwcql/templates'
+    '/srv/caqel/templates'
 )
 
 INSTALLED_APPS = (
@@ -98,4 +98,4 @@ INSTALLED_APPS = (
 
 CASSANDRA_HOST="127.0.0.1"
 CASSANDRA_PORT=9170
-STATIC_DOCROOT = "/home/eevans/dev/src/git/wwwcql/static"
+STATIC_DOCROOT = "/srv/caqel/static"
