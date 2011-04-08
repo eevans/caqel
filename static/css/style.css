@@ -10,9 +10,14 @@ body {
 }
 
 #header {
-    height: 80px;
+    height: 60px;
     background-color: #e9e9ff;
     border-bottom: 2px solid #aac;
+    margin-bottom: 3em;
+}
+
+.logo {
+    margin: 1em 0 0 2.5em;
 }
 
 #container {
