@@ -84,7 +84,7 @@
 <div id="container">
     {% include "schema.html" %}
     
-    <div>
+    <div id="query_box">
         <h2>Query Results</h2>
         <div id="query_results">Enter a query below and click Submit.</div>
         
@@ -98,9 +98,9 @@
                        onclick="$('#query_form').find('textarea[name=query]').val('')" />
             </div>
         </form>
+        <div id="history"></div>
     </div>
 
-    <div id="history"></div>
     <div id="csrf_token">{% csrf_token %}</div>
 </div>
 <div id="footer"></div>

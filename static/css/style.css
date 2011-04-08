@@ -25,10 +25,22 @@ body {
     width: 90%;
 }
 
-#schema_wrapper {
+#query_box {
     float: right;
+    margin-bottom: 5em;
+    width: 70%;
+}
+
+#query_results {
+    background-color: #333;
+    color: lightgrey;
+    padding: .5em 0 .5em .25em;
+}
+
+#schema_wrapper {
+    float: left;
     border: 1px black solid;
-    padding: 0 1em 1em 1em;
+    padding: 1em 1em 1em 1em;
     margin-bottom: 5em;
 }
 
@@ -45,17 +57,10 @@ body {
   text-decoration: underline;
 }
 
-#query_results {
-    padding: .5em 0 .5em 0;
-    margin-bottom: 1.5em;
-    background-color: #333;
-    width: 70%;
-    color: lightgrey;
-}
-
 #history {
-    margin: 1em 0 1em 0;
     color: #a0a0a0;
+    margin-top: 1em;
+    padding: .5em 0 .5em .25em;
 }
 
 #footer {
