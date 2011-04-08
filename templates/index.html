@@ -57,6 +57,11 @@
             ret.error(function(jqXHR, textStatus, errorThrown) {
                 console.log("Query failed: " + textStatus + ": " + errorThrown);
             });
+            
+            var history = $("<span/>").addClass("command").append(queryString);
+            history.hide();
+            $("#history").prepend(history.append("<br/>"));
+            history.fadeIn(700);
         }
         
         $(document).ready(function() {
@@ -90,6 +95,7 @@
         </form>
     </div>
 
+    <div id="history"></div>
     <div id="csrf_token">{% csrf_token %}</div>
 </div>
 <div id="footer"></div>
