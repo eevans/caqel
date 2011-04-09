@@ -80,7 +80,15 @@
 </head>
 <body>
 
-<div id="header"><span class="logo"><img src="/static/images/cql.png" border="0" /></span></div>
+<div id="header">
+    <div class="header-text">
+        <h2>Cassandra Query Language Demo</h2>
+    </div>
+    <span class="logo">
+        <img src="/static/images/cql.png" border="0" />
+    </span>
+</div>
+
 <div id="container">
     {% include "schema.html" %}
     
@@ -93,8 +101,8 @@
                 <textarea name="query" rows="4" cols="80" tabindex="1"></textarea>
             </div>
             <div>
-                <input type="submit" value="Submit" tabindex="2" />
-                <input type="button" value="Reset" tabindex="3"
+                <input type="submit" value="Execute" tabindex="2" />
+                <input type="button" value="Clear" tabindex="3"
                        onclick="$('#query_form').find('textarea[name=query]').val('')" />
             </div>
         </form>
@@ -103,7 +111,46 @@
 
     <div id="csrf_token">{% csrf_token %}</div>
 </div>
-<div id="footer"></div>
+
+<div id="footer">
+    <div class="legal" style="vertical-align: middle">
+        <p>&copy; 2011 Eric Evans, Licensed under the 
+            <a href="http://www.opensource.org/licenses/mit-license.php">
+                MIT license</a>.</p>
+    </div>
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <h4>Get Meta</h4>
+                    <ul>
+                        <li><a href="http://github.com/eevans/caqel">
+                            Caqel Source code</a></li>
+                        <li><a href="http://github.com/eevans/caqel/issues">
+                            Caqel Bugs</a></li>
+                    </ul>
+                </td>
+                <td>
+                    <h4>Get In Touch</h4>
+                    <ul>
+                        <li><a href="mailto:eevans@apache.org">By Email</a></li>
+                        <li><a href="http://twitter.com/jericevans">
+                            On Twitter</a></li>
+                    </ul>
+                </td>
+                <td>
+                    <h4>Get Help</h4>
+                    <ul>
+                        <li><a href="https://svn.apache.org/viewvc/cassandra/trunk/doc/cql/CQL.html?view=co">
+                            CQL Language Docs</a></li>
+                        <li><a href="mailto:user-subscribe@cassandra.apache.org">
+                            User Mailing List</a></li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 </body>
 </html>

@@ -1,6 +1,7 @@
 
 html {
     font-family: "lucida grande",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    background-color: #e9e9ff;
 }
 
 body {
@@ -14,10 +15,12 @@ body {
     background-color: #e9e9ff;
     border-bottom: 2px solid #aac;
     margin-bottom: 3em;
+    padding: 0 2.5em 0 2.5em;
 }
 
-.logo {
-    margin: 1em 0 0 2.5em;
+.header-text {
+    float: right;
+    font-style: italic;
 }
 
 #container {
@@ -49,12 +52,13 @@ body {
     padding-left: 1em;
 }
 
-#schema_wrapper a {
-  text-decoration: none;
+a {
+    text-decoration: none;
+    color: #555;
 }
 
-#schema_wrapper a:hover {
-  text-decoration: underline;
+a:hover {
+    color: #c40022;
 }
 
 #history {
@@ -67,8 +71,25 @@ body {
     background-color: #e9e9ff;
     border-top: 2px solid #aac;
     clear: both;
-    position: relative;
-    height: 130px;
+    height: 100px;
+    padding: 1em 2.5em 0 2.5em;
+}
+
+#footer ul, h4 {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#footer td {
+    vertical-align: top;
+    padding-right: 3em;
+    white-space: nowrap;
+}
+
+.legal {
+    float: right;
+    margin: auto;
 }
 
 span.key {
