@@ -21,7 +21,7 @@ body {
 .header-text {
     float: right;
     font-style: italic;
-    color: #999;
+    color: #aad;
 }
 
 #container {
@@ -74,7 +74,11 @@ a:hover {
     clear: both;
     height: 100px;
     padding: 1em 2.5em 0 2.5em;
-    color: #555;
+    color: #aad;
+}
+
+#footer a {
+    color: #88b;
 }
 
 #footer ul, h4 {
