@@ -67,6 +67,7 @@
             history.hide();
             $("#history").prepend(history.append("<br/>"));
             history.fadeIn(700);
+            $('#query_form').find('textarea[name=query]').val("");
         }
         
         $(document).ready(function() {
@@ -94,14 +95,16 @@
     
     <div id="query_box">
         <h2>Query Results</h2>
-        <div id="query_results">Enter a query below and click Submit.</div>
+        <div id="query_results">
+            Enter a query below and click Execute (accesskey 'x').</div>
         
         <form action="query/" method="post" id="query_form">
             <div>
                 <textarea name="query" rows="4" cols="80" tabindex="1"></textarea>
             </div>
             <div>
-                <input type="submit" value="Execute" tabindex="2" />
+                <input type="submit" value="Execute" accesskey="X" 
+                       tabindex="2" />
                 <input type="button" value="Clear" tabindex="3"
                        onclick="$('#query_form').find('textarea[name=query]').val('')" />
             </div>
