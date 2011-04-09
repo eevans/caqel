@@ -21,6 +21,7 @@ body {
 .header-text {
     float: right;
     font-style: italic;
+    color: #999;
 }
 
 #container {
@@ -73,6 +74,7 @@ a:hover {
     clear: both;
     height: 100px;
     padding: 1em 2.5em 0 2.5em;
+    color: #555;
 }
 
 #footer ul, h4 {
@@ -81,15 +83,14 @@ a:hover {
     padding: 0;
 }
 
+#footer table {
+    width: 100%;
+}
+
 #footer td {
     vertical-align: top;
     padding-right: 3em;
     white-space: nowrap;
-}
-
-.legal {
-    float: right;
-    margin: auto;
 }
 
 span.key {
