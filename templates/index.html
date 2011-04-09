@@ -12,7 +12,15 @@
             
             if (results.hasOwnProperty("rows")) {
                 var rows = results.rows;
-                if (Object.keys(rows).length < 1) {
+                
+                // Really? Really!?
+                function getCount(obj) {
+                    var element_count = 0;
+                    for (item in obj) { element_count++; }
+                    return element_count;
+                }
+                
+                if (getCount(rows) < 1) {
                     display.append($("<span/>").addClass("message").append("0 results"));
                     return null;
                 }
