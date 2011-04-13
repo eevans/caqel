@@ -1,7 +1,7 @@
 
 html {
     font-family: "lucida grande",Arial,"Helvetica Neue",Helvetica,sans-serif;
-    background-color: #e9e9ff;
+    background-color: #f0f0ff;
 }
 
 body {
@@ -11,8 +11,9 @@ body {
 }
 
 #header {
-    height: 60px;
+    height: 62px;
     background-color: #e9e9ff;
+    background-color: #1287b1;
     border-bottom: 2px solid #aac;
     margin-bottom: 3em;
     padding: 0 2.5em 0 2.5em;
@@ -21,7 +22,7 @@ body {
 .header-text {
     float: right;
     font-style: italic;
-    color: #88b;
+    color: #bbe6fb;
 }
 
 #container {
@@ -79,8 +80,8 @@ a:hover {
 }
 
 #footer {
-    background-color: #e9e9ff;
-    border-top: 2px solid #aac;
+    background-color: #f0f0ff;
+    border-top: 1px solid #aac;
     clear: both;
     height: 100px;
     padding: 1em 2.5em 0 2.5em;
@@ -107,8 +108,13 @@ a:hover {
     white-space: nowrap;
 }
 
+.nav {
+    padding: 0 1em 0 1em;
+}
+
 .legal {
     padding: 1em 0 1em 0;
+    font-size: 90%;
 }
 
 .hints {
