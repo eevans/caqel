@@ -55,6 +55,11 @@ def query(request):
         if query_string.upper().startswith("USE"):
             __execute(query_string)
             keyspace = query_string.split()[1].strip(";")
+
+            # Giving people access to the system keyspace would be Bad
+            if keyspace == "system":
+                raise cql.DatabaseError("No. Not as stupid as I look.");
+
             request.session["current_keyspace"] = keyspace
             json = to_json({"void": "Using keyspace %s" % keyspace})
         elif query_string.split()[1].upper().startswith("COUNT"):
