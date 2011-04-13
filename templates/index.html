@@ -3,7 +3,10 @@
 <html>
 <head>
     <link rel="stylesheet" href="/static/css/style.css" />
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"
+          rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="/static/js/jquery.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
     <script type="text/javascript">
         function displayResults(results) {
@@ -84,6 +87,13 @@
                 var form = this;
                 postQuery($(form).find('textarea[name=query]').val());
             });
+            
+            $('#dialog').dialog({autoOpen: false, width: "60%"});
+            $(document).keypress(function(event) {
+                if (event.which == '63') {
+                    $('#dialog').dialog('open')
+                }
+            });
         });
     </script>
     <title>Cassandra Query Language Test-drive</title>
@@ -118,6 +128,7 @@
                        onclick="$('#query_form').find('textarea[name=query]').val('')" />
             </div>
         </form>
+        <div class="hints">press '?' for quick help</div>
         <div id="history"></div>
     </div>
 
@@ -154,12 +165,6 @@
                             User Mailing List</a></li>
                     </ul>
                 </td>
-                <!--
-                <td>&copy; 2011 Eric Evans, Licensed under the 
-                    <a href="http://www.opensource.org/licenses/mit-license.php">
-                        MIT license</a>.
-                </td>
-                -->
             </tr>
         </tbody>
     </table>
@@ -167,6 +172,20 @@
         <a href="http://www.opensource.org/licenses/mit-license.php">
             MIT license</a>.
     </div>
+</div>
+
+<div id="dialog" title="CQL Help">
+    <p><b>Setting the current keyspace</b></p>
+    <pre>USE &lt;keyspace&gt;</pre>
+    <p><b>Adding new records</b></p>
+    <pre>UPDATE &lt;cf&gt; SET coke = cola, crush = orange WHERE KEY = soda
+INSERT INTO &lt;cf&gt; (KEY, coke, crush) VALUES (soda, cola, crush)</pre>
+    <p><b>Querying</b></p>
+    <pre>SELECT coke,crush FROM &lt;cf&gt; WHERE KEY = soda</pre>
+    <p><b>Querying (range of columns)</b></p>
+    <pre>SELECT c..co FROM &lt;cf&gt; WHERE KEY = soda</pre>
+    <p><b>Querying (range of columns with limit)</b></p>
+    <pre>SELECT FIRST 1 c..co FROM &lt;cf&gt; WHERE KEY = soda</pre>
 </div>
 
 </body>

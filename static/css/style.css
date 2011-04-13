@@ -74,6 +74,10 @@ a:hover {
     padding: .5em 0 .5em .25em;
 }
 
+#dialog p {
+    margin: .25em 0 .25em 0;
+}
+
 #footer {
     background-color: #e9e9ff;
     border-top: 2px solid #aac;
@@ -105,6 +109,12 @@ a:hover {
 
 .legal {
     padding: 1em 0 1em 0;
+}
+
+.hints {
+    font-size: 90%;
+    color: #aaa;
+    margin: .5em 0;
 }
 
 span.key {
