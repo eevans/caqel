@@ -43,8 +43,7 @@ def __serialize(cursor):
                     {"name": marshal(col.name), "value": marshal(col.value)})
         return to_json({"rows": rows})
     else:
-        if cursor.result is None: return to_json({"void": "Success"})
-        else: return to_json({"int": cursor.result})
+        return to_json({"void": "Success"})
 
 # View methods
 def index(request):
@@ -58,6 +57,10 @@ def query(request):
             keyspace = query_string.split()[1].strip(";")
             request.session["current_keyspace"] = keyspace
             json = to_json({"void": "Using keyspace %s" % keyspace})
+        elif query_string.split()[1].upper().startswith("COUNT"):
+            current_keyspace = request.session.get("current_keyspace", None)
+            cursor = __execute(query_string, current_keyspace)
+            json = to_json({"int": cursor.result[0][0]})
         else:
             current_keyspace = request.session.get("current_keyspace", None)
             cursor = __execute(query_string, current_keyspace)
