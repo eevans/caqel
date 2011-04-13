@@ -175,6 +175,12 @@
 </div>
 
 <div id="dialog" title="CQL Help">
+    <p><b>Creating new keyspaces</b></p>
+    <pre>CREATE KEYSPACE &lt;keyspace&gt; WITH strategy_class = SimpleStrategy
+                AND strategy_options:replication_factor = 1</pre>
+    <p><b>Creating new column families</b></p>
+    <pre>CREATE COLUMNFAMILY &lt;cf&gt; (KEY text PRIMARY KEY, coke text, crush text)
+                    WITH comparator = text AND default_validation = text</pre>
     <p><b>Setting the current keyspace</b></p>
     <pre>USE &lt;keyspace&gt;</pre>
     <p><b>Adding new records</b></p>
@@ -183,7 +189,7 @@ INSERT INTO &lt;cf&gt; (KEY, coke, crush) VALUES (soda, cola, crush)</pre>
     <p><b>Querying</b></p>
     <pre>SELECT coke,crush FROM &lt;cf&gt; WHERE KEY = soda</pre>
     <p><b>Querying (range of columns)</b></p>
-    <pre>SELECT c..co FROM &lt;cf&gt; WHERE KEY = soda</pre>
+    <pre>SELECT coa..coz FROM &lt;cf&gt; WHERE KEY = soda</pre>
     <p><b>Querying (range of columns with limit)</b></p>
     <pre>SELECT FIRST 1 c..co FROM &lt;cf&gt; WHERE KEY = soda</pre>
 </div>
