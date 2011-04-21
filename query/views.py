@@ -15,32 +15,35 @@ import threading
 __local = threading.local()
 
 def __get_cursor():
-    return cql.connect(settings.CASSANDRA_HOST,
-                       settings.CASSANDRA_PORT).cursor()
+    if not hasattr(__local, "conn") or not getattr(__local, "conn"):
+        __local.conn = cql.connect(settings.CASSANDRA_HOST,
+                                   settings.CASSANDRA_PORT)
+    return __local.conn.cursor()
 
 def __execute(query, keyspace=None):
     # Lazily assign a cursor instance to a thread-local variable
-    if not hasattr(__local, "cursor") or not getattr(__local, "cursor"):
-        __local.cursor = __get_cursor()
+    cursor = __get_cursor()
     if keyspace:
-        __local.cursor.execute("USE " + keyspace)
+        cursor.execute("USE " + keyspace)
         
-    __local.cursor.execute(query)
-    return __local.cursor
+    cursor.execute(query)
+    return cursor
 
 def __serialize(cursor):
     def marshal(value):
-        if isinstance(value, UUID):
+        if isinstance(value, (UUID,long)):
             return str(value)
         return value
         
     if isinstance(cursor.result, ResultSet):
         rows = {}
-        for row in cursor.result.rows:
-            rows[row.key] = []
-            for col in row.columns:
-                rows[row.key].append(
-                    {"name": marshal(col.name), "value": marshal(col.value)})
+        for x in range(cursor.rowcount):
+            r = cursor.fetchone()
+            rows[r[0]] = []
+            for (j, column_value) in enumerate(r[1:]):
+                column_name = cursor.description[j+1][0]
+                rows[r[0]].append({"name": marshal(column_name),
+                    "value": marshal(column_value)})
         return to_json({"rows": rows})
     else:
         return to_json({"void": "Success"})
