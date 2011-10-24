@@ -4,7 +4,11 @@ from django.http import HttpResponse
 from django.core.context_processors import csrf
 from django.conf import settings
 
-from json import dumps as to_json
+try:
+    from json import dumps as to_json
+except ImportError:
+    from simplejson import dumps as to_json
+
 from uuid import UUID
 
 import cql
