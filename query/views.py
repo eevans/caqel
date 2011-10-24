@@ -11,10 +11,7 @@ except ImportError:
 
 from uuid import UUID
 
-import cql
-from cql.results import ResultSet
- 
-import threading
+import cql, threading
 
 __local = threading.local()
 
