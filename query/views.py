@@ -38,19 +38,20 @@ def __serialize(cursor):
         if isinstance(value, (UUID,long)):
             return str(value)
         return value
-        
-    if isinstance(cursor.result, ResultSet):
-        rows = {}
-        for x in range(cursor.rowcount):
-            r = cursor.fetchone()
-            rows[r[0]] = []
-            for (j, column_value) in enumerate(r[1:]):
-                column_name = cursor.description[j+1][0]
-                rows[r[0]].append({"name": marshal(column_name),
-                    "value": marshal(column_value)})
-        return to_json({"rows": rows})
-    else:
+
+    if not cursor.result:
         return to_json({"void": "Success"})
+
+    rows = {}
+    for x in range(cursor.rowcount):
+        r = cursor.fetchone()
+        rows[r[0]] = []
+        for (j, column_value) in enumerate(r[1:]):
+            column_name = cursor.description[j+1][0]
+            rows[r[0]].append({"name": marshal(column_name),
+                    "value": marshal(column_value)})
+
+    return to_json({"rows": rows})
 
 # View methods
 def index(request):
