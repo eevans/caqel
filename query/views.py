@@ -80,7 +80,8 @@ def query(request):
     return HttpResponse(json, mimetype="application/json")
     
 def describe_keyspaces(request):
-    schema = __get_cursor().decoder.schema    # you gotta keep 'em violated
+    cursor = __execute("SELECT * FROM LocationInfo", keyspace="system")
+    schema = cursor.decoder.schema    # you gotta keep 'em violated
     del schema["system"]
     return HttpResponse(to_json(schema), mimetype="application/json")
 
