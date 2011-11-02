@@ -84,7 +84,10 @@ def query(request):
     return HttpResponse(json, mimetype="application/json")
     
 def describe_keyspaces(request):
-    client =  __get_cursor()._connection.client
+    cursor = __get_cursor()
+    # ...because it's amazing how much random shit broke between 1.0.3 and 1.0.5
+    if hasattr(cursor._connection): client =  cursor._connection.client
+    else: client = cursor.parent_connection.client
     
     schema = {}
     for ksdef in client.describe_keyspaces():
