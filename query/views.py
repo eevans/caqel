@@ -86,7 +86,7 @@ def query(request):
 def describe_keyspaces(request):
     cursor = __get_cursor()
     # ...because it's amazing how much random shit broke between 1.0.3 and 1.0.5
-    if hasattr(cursor._connection): client =  cursor._connection.client
+    if hasattr(cursor, "_connection"): client =  cursor._connection.client
     else: client = cursor.parent_connection.client
     
     schema = {}
