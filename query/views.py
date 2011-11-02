@@ -4,6 +4,9 @@ from django.http import HttpResponse
 from django.core.context_processors import csrf
 from django.conf import settings
 
+import logging
+logger = logging.getLogger(__name__)
+
 try:
     from json import dumps as to_json
 except ImportError:
@@ -36,7 +39,7 @@ def __serialize(cursor):
             return str(value)
         return value
 
-    if not cursor.result:
+    if not hasattr(cursor, "result"):
         return to_json({"void": "Success"})
 
     rows = {}
@@ -70,7 +73,8 @@ def query(request):
         elif query_string.split()[1].upper().startswith("COUNT"):
             current_keyspace = request.session.get("current_keyspace", None)
             cursor = __execute(query_string, current_keyspace)
-            json = to_json({"int": cursor.result[0][0]})
+            r = cursor.fetchone()
+            json = to_json({"int": r[0]})
         else:
             current_keyspace = request.session.get("current_keyspace", None)
             cursor = __execute(query_string, current_keyspace)
@@ -80,9 +84,16 @@ def query(request):
     return HttpResponse(json, mimetype="application/json")
     
 def describe_keyspaces(request):
-    cursor = __execute("SELECT * FROM LocationInfo", keyspace="system")
-    schema = cursor.decoder.schema    # you gotta keep 'em violated
-    del schema["system"]
+    client =  __get_cursor()._connection.client
+    
+    schema = {}
+    for ksdef in client.describe_keyspaces():
+        if ksdef.name == "system":
+            continue
+        schema[ksdef.name] = {}
+        for cfdef in ksdef.cf_defs:
+            schema[ksdef.name][cfdef.name] = None
+    
     return HttpResponse(to_json(schema), mimetype="application/json")
 
 
